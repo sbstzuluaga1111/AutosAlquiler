@@ -1,0 +1,68 @@
+db.createCollection("Clientes");
+db.Clientes.insertMany(
+{
+  "_id": ObjectId("650677f5b25ebb8bd853427e"),
+  "nombre": "Cliente 1",
+  "email": "cliente1@example.com",
+  "telefono": "123-456-7890",
+  "direccion": "Dirección del Cliente 1",
+  "historial_alquileres": [],
+  "historial_reservas": []
+},
+);
+
+db.createCollection("Alquileres");
+db.Alquileres.insertMany(
+{
+  "_id": ObjectId("650679c2b25ebb8bd8534286"),
+      "cliente_id": ObjectId("650677f5b25ebb8bd853427e"),
+      "automovil_id": ObjectId("5f8b14f3ab3b464f6646282f"),
+      "fecha_inicio": ISODate("2023-09-16T00:00:00.000Z"),
+      "fecha_fin": ISODate("2023-09-18T00:00:00.000Z"),
+      "monto_total": 150,
+      "sucursal_id": ObjectId("5f8b14f3ab3b464f6646282c"),
+      "entregado": true
+},
+);
+
+db.createCollection("Automoviles");
+db.Automoviles.insertMany(
+{
+  "_id": ObjectId("5f8b14f3ab3b464f6646282f"),
+  "marca": "Marca del Automóvil",
+  "modelo": "Modelo del Automóvil",
+  "ano": 2023,
+  "disponible": true
+},
+);
+
+db.createCollection("Empleados");
+db.Empleados.insertMany(
+{
+  "_id": ObjectId("65067a24b25ebb8bd8534287"),
+      "nombre": "Empleado 1",
+      "puesto": "Gerente",
+      "sucursal_id": ObjectId("5f8b14f3ab3b464f6646282c")
+},
+);
+
+db.createCollection("Reservas");
+db.Reservas.insertMany(
+{
+  "_id": ObjectId("650678f0b25ebb8bd8534285"),
+      "cliente_id": ObjectId("650677f5b25ebb8bd853427e"),
+      "automovil_id": ObjectId("5f8b14f3ab3b464f6646282f"),
+      "fecha_inicio": ISODate("2023-09-20T00:00:00.000Z"),
+      "fecha_fin": ISODate("2023-09-22T00:00:00.000Z"),
+      "entregado": false
+},
+);
+
+db.createCollection("Sucursales");
+db.Sucursales.insertMany(
+{
+  "_id": ObjectId("5f8b14f3ab3b464f6646282c"),
+  "nombre": "Sucursal 1",
+  "direccion": "Dirección de la Sucursal 1"
+},
+);

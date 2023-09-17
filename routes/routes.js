@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/punto1', async (req, res) => {
+router.get('/punto2', async (req, res) => {
     try {
         const client = new MongoClient(url);
         await client.connect();
@@ -34,7 +34,7 @@ router.get('/punto1', async (req, res) => {
 
 
 
-router.get('/punto2', async (req, res) => {
+router.get('/punto3', async (req, res) => {
     try {
         const client = new MongoClient(url);
         await client.connect();
@@ -50,7 +50,7 @@ router.get('/punto2', async (req, res) => {
     }
 });
 
-router.get('/punto3', async (req, res) => {
+router.get('/punto4', async (req, res) => {
     try {
         const client = new MongoClient(url);
         await client.connect();
@@ -62,24 +62,24 @@ router.get('/punto3', async (req, res) => {
         const resultado = await alquileresCollection.aggregate([
             {
                 $match: {
-                    fecha_fin: { $gte: new Date() }, // Filtrar alquileres activos por fecha
-                    entregado: false, // Filtrar alquileres no entregados
+                    fecha_fin: { $gte: new Date() },
+                    entregado: false,
                 },
             },
             {
                 $lookup: {
-                    from: 'Clientes', // Colección para realizar la unión
-                    localField: 'cliente_id', // Utilizar el nombre del campo sin "$oid"
-                    foreignField: '_id', // Utilizar el nombre del campo sin "$oid"
-                    as: 'cliente', // Alias para el resultado de la unión
+                    from: 'Clientes',
+                    localField: 'cliente_id',
+                    foreignField: '_id',
+                    as: 'cliente',
                 },
             },
             {
-                $unwind: '$cliente', // Deshacer el resultado del $lookup para obtener un solo objeto cliente
+                $unwind: '$cliente',
             },
             {
                 $project: {
-                    _id: 1, // Incluir campos relevantes de los alquileres y clientes
+                    _id: 1,
                     fecha_inicio: 1,
                     fecha_fin: 1,
                     cliente: {
@@ -87,6 +87,74 @@ router.get('/punto3', async (req, res) => {
                         email: 1,
                         telefono: 1,
                         direccion: 1,
+                    },
+                },
+            },
+        ]).toArray();
+
+        res.json(resultado);
+        client.close();
+    } catch (e) {
+        console.error(e);
+        res.status(500).json("Error en la consulta");
+    }
+});
+
+
+router.get('/punto5', async (req, res) => {
+    try {
+        const client = new MongoClient(url);
+        await client.connect();
+        const db = client.db(nombreBases);
+        
+        const reservasCollection = db.collection('Reservas');
+        const clientesCollection = db.collection('Clientes');
+        const automovilesCollection = db.collection('Automoviles');
+
+        const resultado = await reservasCollection.aggregate([
+            {
+                $match: {
+                    fecha_inicio: { $gte: new Date() },
+                    entregado: false,
+                },
+            },
+            {
+                $lookup: {
+                    from: 'Clientes',
+                    localField: 'cliente_id',
+                    foreignField: '_id',
+                    as: 'cliente',
+                },
+            },
+            {
+                $lookup: {
+                    from: 'Automoviles',
+                    localField: 'automovil_id',
+                    foreignField: '_id',
+                    as: 'automovil',
+                },
+            },
+            {
+                $unwind: '$cliente',
+            },
+            {
+                $unwind: '$automovil',
+            },
+            {
+                $project: {
+                    _id: 1,
+                    fecha_inicio: 1,
+                    fecha_fin: 1,
+                    cliente: {
+                        nombre: 1,
+                        email: 1,
+                        telefono: 1,
+                        direccion: 1,
+                    },
+                    automovil: {
+                        marca: 1,
+                        modelo: 1,
+                        ano: 1,
                     },
                 },
             },
