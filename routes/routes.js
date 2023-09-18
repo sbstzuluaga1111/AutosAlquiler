@@ -143,7 +143,7 @@ router.delete('/eliminar-automovil/:id', checkPermission('gerente'), async (req,
 });
 
 // Ruta para registrar un alquiler o una reserva.
-router.post('/registrar-alquiler-o-reserva', async (req, res) => {
+router.post('/registrar-alquiler-o-reserva',checkPermission('gerente'), async (req, res) => {
     try {
         const nuevaOperacion = req.body;
 
@@ -191,7 +191,7 @@ router.post('/registrar-alquiler-o-reserva', async (req, res) => {
 
 
 // Ruta para registrar la devolución de un automóvil
-router.post('/registrar-devolucion', async (req, res) => {
+router.post('/registrar-devolucion',checkPermission('gerente'), async (req, res) => {
     try {
         const devolucion = req.body; // Datos de la devolución
 
@@ -212,7 +212,7 @@ router.post('/registrar-devolucion', async (req, res) => {
 });
 
 // Ruta para registrar la entrega de un automóvil
-router.post('/registrar-entrega', async (req, res) => {
+router.post('/registrar-entrega',checkPermission('gerente'), async (req, res) => {
     try {
         const entrega = req.body; // Datos de la entrega
 
