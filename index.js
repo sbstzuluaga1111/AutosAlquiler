@@ -3,17 +3,15 @@ const dotenv = require('dotenv');
 const router = express.Router(); 
 const app = express();
 
-dotenv.config()
+dotenv.config();
 
-
-
-const port= process.env.PORT || 3000;
-
-
-const routerBase = require('./routes/routes');
-app.use('/Alquileres',routerBase);
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.listen(port, ()=> {
-   console.log('hello world') 
+
+const routerBase = require('./routes/routes');
+app.use('/Alquileres', routerBase);
+
+app.listen(port, () => {
+   console.log('Servidor en ejecución en el puerto ' + port);
 });
