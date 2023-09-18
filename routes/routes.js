@@ -239,168 +239,48 @@ router.post('/registrar-entrega', async (req, res) => {
 
 //Rutas General de los puntos
 
-router.get('/', (req, res) => {
-    try {
-        res.json("Somos CL");
-    } catch (e) {
-        res.status(500).json("estoy mal");
-    }
-});
-
-router.get('/punto2', async (req, res) => {
-    try {
-        const client = new MongoClient(url);
-        await client.connect();
-        const db = client.db(nombreBases);
-        const colection = db.collection('cliente');
-        const result = await colection.find({}).toArray();
-        res.json(result);
-        client.close();
-        
-    } catch (e) {
-        console.log(e);
-        res.status(404).json("Error en la consulta");
-    }
-});
-
-
-
-router.get('/punto3', async (req, res) => {
-    try {
-        const client = new MongoClient(url);
-        await client.connect();
-        const db = client.db(nombreBases);
-        const colection = db.collection('Automoviles');
-        const result = await colection.find({ disponible: true }).toArray();
-        res.json(result);
-        client.close();
-        
-    } catch (e) {
-        console.error(e);
-        res.status(500).json("Error en la consulta");
-    }
-});
-
-router.get('/punto4', async (req, res) => {
-    try {
-        const client = new MongoClient(url);
-        await client.connect();
-        const db = client.db(nombreBases);
-        
-        const alquileresCollection = db.collection('Alquileres');
-        const clientesCollection = db.collection('Clientes');
-
-        const resultado = await alquileresCollection.aggregate([
-            {
-                $match: {
-                    fecha_fin: { $gte: new Date() },
-                    entregado: false,
-                },
-            },
-            {
-                $lookup: {
-                    from: 'Clientes',
-                    localField: 'cliente_id',
-                    foreignField: '_id',
-                    as: 'cliente',
-                },
-            },
-            {
-                $unwind: '$cliente',
-            },
-            {
-                $project: {
-                    _id: 1,
-                    fecha_inicio: 1,
-                    fecha_fin: 1,
-                    cliente: {
-                        nombre: 1,
-                        email: 1,
-                        telefono: 1,
-                        direccion: 1,
-                    },
-                },
-            },
-        ]).toArray();
-
-        res.json(resultado);
-        client.close();
-    } catch (e) {
-        console.error(e);
-        res.status(500).json("Error en la consulta");
-    }
-});
-
-
-router.get('/punto5', async (req, res) => {
-    try {
-        const client = new MongoClient(url);
-        await client.connect();
-        const db = client.db(nombreBases);
-        
-        const reservasCollection = db.collection('Reservas');
-        const clientesCollection = db.collection('Clientes');
-        const automovilesCollection = db.collection('Automoviles');
-
-        const resultado = await reservasCollection.aggregate([
-            {
-                $match: {
-                    fecha_inicio: { $gte: new Date() },
-                    entregado: false,
-                },
-            },
-            {
-                $lookup: {
-                    from: 'Clientes',
-                    localField: 'cliente_id',
-                    foreignField: '_id',
-                    as: 'cliente',
-                },
-            },
-            {
-                $lookup: {
-                    from: 'Automoviles',
-                    localField: 'automovil_id',
-                    foreignField: '_id',
-                    as: 'automovil',
-                },
-            },
-            {
-                $unwind: '$cliente',
-            },
-            {
-                $unwind: '$automovil',
-            },
-            {
-                $project: {
-                    _id: 1,
-                    fecha_inicio: 1,
-                    fecha_fin: 1,
-                    cliente: {
-                        nombre: 1,
-                        email: 1,
-                        telefono: 1,
-                        direccion: 1,
-                    },
-                    automovil: {
-                        marca: 1,
-                        modelo: 1,
-                        ano: 1,
-                    },
-                },
-            },
-        ]).toArray();
-
-        res.json(resultado);
-        client.close();
-    } catch (e) {
-        console.error(e);
-        res.status(500).json("Error en la consulta");
-    }
-});
-
-
-
-
-
+const {ejercicio2,
+    ejercicio3,
+    ejercicio4,
+    ejercicio5,
+    ejercicio6,
+    ejercicio7,
+    ejercicio8,
+    ejercicio9,
+    ejercicio10,
+    ejercicio11,
+    ejercicio12,
+    ejercicio13,
+    ejercicio14,
+    ejercicio15,
+    ejercicio16,
+    ejercicio17,
+    ejercicio18,
+    ejercicio19,
+    ejercicio20,
+    ejercicio21, } = require('../controller/endpoints.controller.js');
+  
+ 
+  
+  router.use("/ejercicio2", [], ejercicio2);
+  router.use("/ejercicio3", [], ejercicio3);
+  router.use("/ejercicio4", [], ejercicio4);
+  router.use("/ejercicio5", [], ejercicio5);
+  router.use("/ejercicio6", [], ejercicio6);
+  router.use("/ejercicio7", [], ejercicio7);
+  router.use("/ejercicio8", [], ejercicio8);
+  router.use("/ejercicio9", [], ejercicio9);
+  router.use("/ejercicio10", [], ejercicio10);
+  router.use("/ejercicio11", [], ejercicio11);
+  router.use("/ejercicio12", [], ejercicio12);
+  router.use("/ejercicio13", [], ejercicio13);
+  router.use("/ejercicio14", [], ejercicio14);
+  router.use("/ejercicio15", [], ejercicio15);
+  router.use("/ejercicio16", [], ejercicio16);
+  router.use("/ejercicio17", [], ejercicio17);
+  router.use("/ejercicio18", [], ejercicio18);
+  router.use("/ejercicio19", [], ejercicio19);
+  router.use("/ejercicio20", [], ejercicio20);
+  router.use("/ejercicio21", [], ejercicio21);
+  
 module.exports = router;
