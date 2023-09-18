@@ -179,3 +179,115 @@ module.exports = {
   router.use("/Alquileres/ejercicio21", [], ejercicio21);
 ```
 
+## Esquema base de datos:
+```
+{
+  "colecciones": {
+    "cliente": [
+      {
+        "_id": {
+          "$oid": "650736a7aff90cfbacef5c1a"
+        },
+        "ID_Cliente": 101,
+        "Nombre": "Juan",
+        "Apellido": "Pérez",
+        "DNI": "12345678A",
+        "Direccion": "Calle 123, Ciudad",
+        "Telefono": "123-456-7890",
+        "Email": "juan.perez@example.com"
+      }
+      // Otros registros de clientes aquí
+    ],
+    "automovil": [
+      {
+        "_id": {
+          "$oid": "6507339daff90cfbacef5c14"
+        },
+        "ID_Automovil": 101,
+        "Marca": "Toyota",
+        "Modelo": "Camry",
+        "Anio": 2022,
+        "Tipo": "Sedán",
+        "Capacidad": 5,
+        "Precio_Diario": 45.99
+      }
+      // Otros registros de automóviles aquí
+    ],
+    "empleado": [
+      {
+        "_id": {
+          "$oid": "6507bb20237454d9a1b27b68"
+        },
+        "nombre": "EmpleadoPrueba",
+        "apellido": "EmpleadoApellido",
+        "dni": "12345678X",
+        "direccion": "Calle Empleado 123",
+        "telefono": "123-456-7890",
+        "cargo": "Gerente",
+        "password": "$2a$10$zb9vxP9b/vhmME9FI/A08uVJXuvJGAYomln2H1.5Zv0zamkeY1aee"
+      }
+      // Otros registros de empleados aquí
+    ],
+    "alquiler": [
+      {
+        "_id": {
+          "$oid": "65073bbeaff90cfbacef5c1d"
+        },
+        "ID_Alquiler": 1,
+        "ID_Cliente": 101,
+        "ID_Automovil": 101,
+        "Fecha_Inicio": "2023-09-20",
+        "Fecha_Fin": "2023-09-25",
+        "Costo_Total": 249.95,
+        "Estado": "Finalizado"
+      }
+      // Otros registros de alquileres aquí
+    ],
+    "reserva": [
+      {
+        "_id": {
+          "$oid": "6507351caff90cfbacef5c17"
+        },
+        "ID_Reserva": 1,
+        "ID_Cliente": 101,
+        "ID_Automovil": 101,
+        "Fecha_Reserva": "2023-09-17",
+        "Fecha_Inicio": "2023-09-20",
+        "Fecha_Fin": "2023-09-25",
+        "Estado": "Activa"
+      }
+      // Otros registros de reservas aquí
+    ],
+    "registro_devolucion": [
+      {
+        "_id": {
+          "$oid": "65074131aff90cfbacef5c20"
+        },
+        "ID_Registro": 1,
+        "ID_Alquiler": 1,
+        "ID_Empleado": 101,
+        "Fecha_Devolucion": "2023-09-25",
+        "Combustible_Devuelto": 35.5,
+        "Kilometraje_Devuelto": 1200,
+        "Monto_Adicional": 15
+      }
+      // Otros registros de devoluciones aquí
+    ],
+    "registro_entrega": [
+      {
+        "_id": {
+          "$oid": "65074271aff90cfbacef5c23"
+        },
+        "ID_Registro": 1,
+        "ID_Alquiler": 1,
+        "ID_Empleado": 101,
+        "Fecha_Entrega": "2023-09-25",
+        "Combustible_Entregado": 35.5,
+        "Kilometraje_Entregado": 1200
+      }
+      // Otros registros de entregas aquí
+    ]
+  }
+}
+
+```
